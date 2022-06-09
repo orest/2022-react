@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import ExerciseLogForm from "../components/ExerciseLog/ExerciseLogForm";
 import PageBody from "../components/UI/PageBody";
 
 const ExerciseLogEdit = () => {
@@ -21,7 +22,12 @@ const ExerciseLogEdit = () => {
     console.log(data);
   };
 
-  return <PageBody pageTitle="Edit Entry">{id}</PageBody>;
+  return (
+    <PageBody pageTitle="Edit Entry">
+      {id}
+      <ExerciseLogForm></ExerciseLogForm>
+    </PageBody>
+  );
 };
 
 export default ExerciseLogEdit;
