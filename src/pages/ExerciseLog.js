@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import ExerciseLogList from "../components/ExerciseLog/ExerciseLogList";
+import Loading from "../components/UI/Loading/Loading";
 import PageBody from "../components/UI/PageBody";
 
 const ExerciseLog = () => {
   const [entries, setEntries] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const baseApiUrl = "https://localhost:7001/api/Entries";
 
   useEffect(() => {
-    refresh2();
+    refresh();
   }, []);
 
   const onLoadHandler = () => {
@@ -20,7 +22,7 @@ const ExerciseLog = () => {
 
     fetch(baseApiUrl)
       .then((response) => {
-        console.log(2);
+        setIsLoading(false);
         return response.json();
       })
       .then((data) => {
@@ -37,6 +39,7 @@ const ExerciseLog = () => {
   const refresh2 = async () => {
     try {
       let response = await fetch(baseApiUrl);
+      setIsLoading(false);
       if (response.ok) {
         let body = await response.json();
         setEntries(body);
@@ -51,6 +54,7 @@ const ExerciseLog = () => {
 
   return (
     <PageBody pageTitle="Exercise Log">
+      {isLoading && <Loading />}
       <ExerciseLogList entries={entries}></ExerciseLogList>
 
       <button className="btn btn-outline-primary" onClick={onLoadHandler}>
